@@ -9,7 +9,9 @@
     "dev": "nuxi dev",
     "build": "nuxi build --prerender && electron-builder"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@171h/log": "^2.2.0"
+  },
   "devDependencies": {
     "@types/node": "^18",
     "electron": "^24.1.3",
