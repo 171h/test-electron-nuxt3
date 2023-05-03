@@ -1,11 +1,25 @@
-window.addEventListener('DOMContentLoaded', () => {
+import { contextBridge } from "electron";
+
+window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector: string, text: string) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
+    const element = document.getElementById(selector);
+    if (element) element.innerText = text;
+  };
+
+  for (const dependency of ["chrome", "node", "electron"]) {
+    console.log(`${dependency}-version`, process.versions[dependency]!);
+    replaceText(`${dependency}-version`, process.versions[dependency]!);
   }
 
-  for (const dependency of ['chrome', 'node', 'electron']) {
-    console.log(`${dependency}-version`, process.versions[dependency]!)
-    replaceText(`${dependency}-version`, process.versions[dependency]!)
-  }
-})
+  // contextBridge.exposeInMainWorld('myAPI', {
+  //   desktop: true,
+  // })
+
+  // contextBridge.exposeInIsolatedWorld(1, 'myAPI', {
+  //   desktop: true,
+  // })
+});
+
+// contextBridge.exposeInMainWorld("myAPI", {
+//   desktop: true,
+// });

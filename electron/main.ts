@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
+import { Logger } from '@171h/log'
 
+const logger = new Logger('electron:main')
 // The built directory structure
 //
 // ├─┬ dist-electron
@@ -48,6 +50,10 @@ function bootstrap() {
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) bootstrap();
   });
+
+  const contents = win.webContents
+  // console.log(contents)
+
 }
 
 app.whenReady().then(bootstrap);

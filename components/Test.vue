@@ -1,4 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Logger } from '@171h/log';
+const logger = new Logger('Test.vue');
+
+onMounted(() => {
+  logger.info('window', window);
+  logger.info('window.myAPI', window?.myAPI);
+})
+
+</script>
 
 <template>
   <div>
