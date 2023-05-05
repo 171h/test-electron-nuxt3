@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ipcRenderer } from 'electron'
+import { BrowserWindow, ipcRenderer } from 'electron'
 import { Logger } from '@171h/log';
 const logger = new Logger('Test.vue');
 
@@ -12,6 +12,10 @@ const send = () => {
   ipcRenderer.send('message', 'hello from renderer')
 }
 
+const openNewWindow = () => {
+  ipcRenderer.send('openNewWindow', 'hello from renderer')
+
+}
 
 </script>
 
@@ -30,5 +34,7 @@ const send = () => {
       <span id="electron-version"></span>
     </div>
     <button @click="send">send</button>
+    <button @click="openNewWindow">点击打开新窗口</button>
+    <input />
   </div>
 </template>
