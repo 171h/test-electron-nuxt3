@@ -1,5 +1,3 @@
-import { contextBridge } from "electron";
-
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector: string, text: string) => {
     const element = document.getElementById(selector);
@@ -10,16 +8,4 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log(`${dependency}-version`, process.versions[dependency]!);
     replaceText(`${dependency}-version`, process.versions[dependency]!);
   }
-
-  // contextBridge.exposeInMainWorld('myAPI', {
-  //   desktop: true,
-  // })
-
-  // contextBridge.exposeInIsolatedWorld(1, 'myAPI', {
-  //   desktop: true,
-  // })
 });
-
-// contextBridge.exposeInMainWorld("myAPI", {
-//   desktop: true,
-// });

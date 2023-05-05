@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { ipcRenderer } from 'electron'
 import { Logger } from '@171h/log';
 const logger = new Logger('Test.vue');
 
-onMounted(() => {
-  logger.info('window', window);
-  logger.info('window.myAPI', window?.myAPI);
+ipcRenderer.on('load', (event, arg) => {
+  console.log('load', arg)
+  logger.info('load', arg);
 })
+
+const send = () => {
+  ipcRenderer.send('message', 'hello from renderer')
+}
+
 
 </script>
 
@@ -23,5 +29,6 @@ onMounted(() => {
       <span>Electron:</span>
       <span id="electron-version"></span>
     </div>
+    <button @click="send">send</button>
   </div>
 </template>
