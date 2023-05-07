@@ -36,5 +36,6 @@ const openNewWindow = () => {
     <button @click="send">send</button>
     <button @click="openNewWindow">点击打开新窗口</button>
     <input />
+    <span>创建了新分支</span>
   </div>
 </template>
