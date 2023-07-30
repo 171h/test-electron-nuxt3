@@ -1,8 +1,10 @@
 import { app, BrowserWindow, ipcMain, Menu, MenuItem, MenuItemConstructorOptions } from "electron";
 import path from "path";
-import { Logger } from "@171h/log";
+import { menuTemplate } from './menu'
+// import { Logger } from "@171h/log";
 
-const logger = new Logger("electron:main");
+// const logger = new Logger("electron:main");
+const logger = console;
 // The built directory structure
 //
 // ├─┬ dist-electron
@@ -29,7 +31,7 @@ function bootstrap() {
     // y: 1200,
     width: 1000,
     height: 1000,
-    show: false,
+    show: true,
     // alwaysOnTop: true,
     resizable: false, // set to false to disable resize
     frame: true, // set to false to hide title bar
@@ -46,126 +48,8 @@ function bootstrap() {
     },
   });
 
-  const menuTemplate: MenuItemConstructorOptions[] = [
-    {
-      label: "文件",
-      submenu: [
-        {
-          label: "打开文件",
-          click(menuItem, browserWindow, event) {
-            logger.info("open a file");
-          },
-        },
-        {
-          label: '关于',
-          role: 'about'
-        }
-      ],
-    },
-    {
-      label: "编辑",
-      submenu: [
-        { role: "undo" },
-        { role: "redo" },
-        { type: "separator" },
-        { role: "cut" },
-        { role: "copy" },
-        { role: "paste" },
-        { role: "delete" },
-      ],
-    },
-    {
-      label: '角色',
-      submenu: [
-        {
-          label: '复制',
-          role: 'copy'
-        },
-        {
-          label: '剪切',
-          role: 'cut'
-        },
-        {
-          label: '粘贴',
-          role: 'paste'
-        },
-        {
-          label: '最小化',
-          role: 'minimize'
-        },
-        {
-          label: '帮助',
-          role: 'help'
-        }
-      ]
-    },
-    {
-      label: '类型',
-      submenu: [
-        {
-          label: '选项1',
-          type: 'checkbox',
-        },
-        {
-          label: '选项2',
-          type: 'checkbox',
-        },
-        {
-          label: '选项3',
-          type: 'checkbox',
-        },
-        { type: 'separator' },
-        {
-          label: 'item1',
-          type: 'radio',
-        },
-        {
-          label: 'item2',
-          type: 'radio',
-        },
-        {
-          label: 'item3',
-          type: 'radio',
-        },
-        { type: 'separator' },
-        {
-          label: 'windows',
-          type: 'submenu',
-          role: 'windowMenu'
-        }
-      ]
-    },
-    {
-      label: '其他',
-      submenu: [
-        {
-          label: '复制',
-          role: 'copy'
-        },
-        {
-          label: '剪切',
-          role: 'cut'
-        },
-        {
-          label: 'vite',
-          icon: path.join(__dirname, '../public/vite.png'),
-          accelerator: 'ctrl+o',
-          click() {
-            logger.info('vite')
-          }
-        }
-      ]
-    }
-  ];
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
-
-  if (process.env.VITE_DEV_SERVER_URL) {
-    win.loadURL(process.env.VITE_DEV_SERVER_URL);
-    win.webContents.openDevTools();
-  } else {
-    win.loadFile(path.join(process.env.VITE_PUBLIC!, "index.html"));
-  }
 
   ipcMain.on("message", (event, arg) => {
     logger.info("message", arg);
@@ -270,6 +154,13 @@ function bootstrap() {
   app.on("quit", () => {
     logger.info("app", "quit");
   });
+
+  if (process.env.VITE_DEV_SERVER_URL) {
+    win.loadURL(process.env.VITE_DEV_SERVER_URL);
+    win.webContents.openDevTools();
+  } else {
+    win.loadFile(path.join(process.env.VITE_PUBLIC!, "index.html"));
+  }
 }
 
 app.whenReady().then(() => {
