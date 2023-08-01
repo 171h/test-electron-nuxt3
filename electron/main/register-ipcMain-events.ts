@@ -18,4 +18,11 @@ export function registerIpcMainEvents(win: BrowserWindow, app: App) {
     });
     newWindow.loadURL("https://www.baidu.com");
   });
+  ipcMain.on("set-title", handleSetTitle);
+}
+
+function handleSetTitle(event: Electron.IpcMainEvent, title: string) {
+  const webContents = event.sender
+  const win = BrowserWindow.fromWebContents(webContents)
+  win?.setTitle(title)
 }

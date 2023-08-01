@@ -1,3 +1,5 @@
+import { contextBridge, ipcRenderer } from 'electron'
+
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector: string, text: string) => {
     const element = document.getElementById(selector);
@@ -8,3 +10,10 @@ window.addEventListener("DOMContentLoaded", () => {
     replaceText(`${dependency}-version`, process.versions[dependency]!);
   }
 });
+
+
+// contextBridge.exposeInMainWorld("electronAPI", {
+//   setTitle: (title: string) => ipcRenderer.send("set-title", title),
+// })
+
+window.setTitle = (title: string) => ipcRenderer.send("set-title", title);

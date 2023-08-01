@@ -15,7 +15,11 @@ const send = () => {
 
 const openNewWindow = () => {
   ipcRenderer.send('openNewWindow', 'hello from renderer')
+}
 
+const title = ref('new title')
+const setTitle = () => {
+  window.setTitle(title.value)
 }
 
 </script>
@@ -37,6 +41,11 @@ const openNewWindow = () => {
     <button @click="send">send</button>
     <button @click="openNewWindow">点击打开新窗口</button>
     <input />
-    <span>创建了新分支</span>
+    
+    <div>
+      <h1>Renderer to main (one-way)</h1>
+      Title: <input type="text" v-model="title">
+      <button @click="setTitle">Set title</button>
+    </div>
   </div>
 </template>

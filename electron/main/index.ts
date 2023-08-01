@@ -27,6 +27,7 @@ const preload = path.join(process.env.DIST, 'preload.js')
 
 function bootstrap() {
   win = new BrowserWindow({
+    title: 'Test Nuxt3 with Electron',
     webPreferences: {
       preload,
       nodeIntegrationInWorker: true,
