@@ -27,6 +27,11 @@ const openFile = async () => {
   filePath.value = await window.openFile()
 }
 
+const counter = ref(0)
+window.onUpdateCounter((event, value) => {
+  logger.info('value', value)
+  counter.value += value
+})
 </script>
 
 <template>
@@ -57,6 +62,11 @@ const openFile = async () => {
       <h1>Renderer to main (two-way)</h1>
       <button @click="openFile">Open file</button>
       File Path:<strong>{{ filePath }}</strong>
+    </div>
+
+    <div>
+      <h1>Main to renderer</h1>
+      Counter: <strong>{{ counter }}</strong>
     </div>
   </div>
 </template>

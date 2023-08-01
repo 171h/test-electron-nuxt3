@@ -37,7 +37,7 @@ function bootstrap() {
     },
   })
 
-  const menu = Menu.buildFromTemplate(appMenuTemplate)
+  const menu = Menu.buildFromTemplate(appMenuTemplate({ app, win }))
   Menu.setApplicationMenu(menu)
 
   registerWinEvents(win)

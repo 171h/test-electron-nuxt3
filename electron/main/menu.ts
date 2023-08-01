@@ -1,4 +1,4 @@
-import { App, MenuItemConstructorOptions } from "electron";
+import { App, MenuItemConstructorOptions, BrowserWindow } from "electron";
 import { Logger } from '@171h/log'
 const logger = new Logger('menu.ts');
 
@@ -19,52 +19,67 @@ const firstMenu: MenuItemConstructorOptions[] = !isMac ? [] : [{
   ]
 }]
 
-export const appMenuTemplate: MenuItemConstructorOptions[] = [
-  ...firstMenu,
-  {
-    label: "文件",
-    submenu: [
-      {
-        label: "打开文件",
-        click(menuItem, browserWindow, event) {
-          logger.info("open a file", { menuItem, browserWindow, event });
+export const appMenuTemplate = (options: { app: App, win: BrowserWindow }) => {
+  return [
+    ...firstMenu,
+    {
+      label: "文件",
+      submenu: [
+        {
+          label: "打开文件",
+          click(menuItem, browserWindow, event) {
+            logger.info("open a file", { menuItem, browserWindow, event });
+          },
         },
-      },
-      {
-        label: "新建文件",
-        click(menuItem, browserWindow, event) {
-          logger.info("create a file", { menuItem, browserWindow, event });
+        {
+          label: "新建文件",
+          click(menuItem, browserWindow, event) {
+            logger.info("create a file", { menuItem, browserWindow, event });
+          }
+        },
+        {
+          label: '退出',
+          role: 'quit'
         }
-      },
-      {
-        label: '退出',
-        role: 'quit'
-      }
-    ],
-  },
-  {
-    label: "编辑",
-    submenu: [
-      { role: "undo" },
-      { role: "redo" },
-      { type: "separator" },
-      { role: "cut" },
-      { role: "copy" },
-      { role: "paste" },
-      { role: "delete" },
-    ],
-  },
-  {
-    label: '帮助',
-    submenu: [
-      {
-        label: '关于',
-        role: 'about'
-      },
-      {
-        label: '帮助',
-        role: 'help'
-      }
-    ]
-  },
-];
+      ],
+    },
+    {
+      label: "编辑",
+      submenu: [
+        { role: "undo" },
+        { role: "redo" },
+        { type: "separator" },
+        { role: "cut" },
+        { role: "copy" },
+        { role: "paste" },
+        { role: "delete" },
+      ],
+    },
+    {
+      label: "test",
+      submenu: [
+        {
+          label: "Increment",
+          click: () => options.win.webContents.send('update-counter', 1)
+        },
+        {
+          label: "Decrement",
+          click: () => options.win.webContents.send('update-counter', -1)
+        }
+      ]
+    },
+    {
+      label: '帮助',
+      submenu: [
+        {
+          label: '关于',
+          role: 'about'
+        },
+        {
+          label: '帮助',
+          role: 'help'
+        }
+      ]
+    },
+  ] as MenuItemConstructorOptions[]
+}
