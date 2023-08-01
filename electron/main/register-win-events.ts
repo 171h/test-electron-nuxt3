@@ -1,5 +1,7 @@
 import { BrowserWindow } from "electron";
-const logger = console;
+import { Logger } from '@171h/log';
+
+const logger = new Logger('register-win-events.ts');
 
 export function registerWinEvents(win:BrowserWindow) {
   setTimeout(() => {

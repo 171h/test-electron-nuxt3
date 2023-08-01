@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { BrowserWindow, ipcRenderer } from 'electron'
+import { ipcRenderer } from 'electron'
 import { Logger } from '@171h/log';
+
 const logger = new Logger('Test.vue');
 
 ipcRenderer.on('load', (event, arg) => {

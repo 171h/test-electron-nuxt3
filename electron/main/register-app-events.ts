@@ -1,6 +1,7 @@
 import { App, BrowserWindow } from 'electron'
+import { Logger } from '@171h/log';
 
-const logger = console
+const logger = new Logger('register-app-events.ts');
 
 export function registerAppEvents(app: App, bootstrap: () => void) {
   app.on("window-all-closed", () => {

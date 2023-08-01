@@ -1,6 +1,7 @@
 import { ipcMain, App, BrowserWindow } from "electron";
+import { Logger } from '@171h/log';
 
-const logger = console;
+const logger = new Logger('register-ipcMain-events.ts');
 
 export function registerIpcMainEvents(win: BrowserWindow, app: App) {
   ipcMain.on("message", (event, arg) => {

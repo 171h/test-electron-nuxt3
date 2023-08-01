@@ -1,7 +1,6 @@
 import { App, MenuItemConstructorOptions } from "electron";
-import path from "path";
-
-const logger = console;
+import { Logger } from '@171h/log'
+const logger = new Logger('menu.ts');
 
 const isMac = process.platform === 'darwin'
 
@@ -20,7 +19,6 @@ const firstMenu: MenuItemConstructorOptions[] = !isMac ? [] : [{
   ]
 }]
 
-
 export const appMenuTemplate: MenuItemConstructorOptions[] = [
   ...firstMenu,
   {
@@ -29,33 +27,18 @@ export const appMenuTemplate: MenuItemConstructorOptions[] = [
       {
         label: "打开文件",
         click(menuItem, browserWindow, event) {
-          logger.info("open a file");
-        }
+          logger.info("open a file", { menuItem, browserWindow, event });
+        },
       },
       {
         label: "新建文件",
         click(menuItem, browserWindow, event) {
-          logger.info("create a file");
+          logger.info("create a file", { menuItem, browserWindow, event });
         }
-      }
-    ]
-  }
-]
-
-
-export const menuTemplate: MenuItemConstructorOptions[] = [
-  {
-    label: "文件",
-    submenu: [
-      {
-        label: "打开文件",
-        click(menuItem, browserWindow, event) {
-          logger.info("open a file");
-        },
       },
       {
-        label: '关于',
-        role: 'about'
+        label: '退出',
+        role: 'quit'
       }
     ],
   },
@@ -72,23 +55,11 @@ export const menuTemplate: MenuItemConstructorOptions[] = [
     ],
   },
   {
-    label: '角色',
+    label: '帮助',
     submenu: [
       {
-        label: '复制',
-        role: 'copy'
-      },
-      {
-        label: '剪切',
-        role: 'cut'
-      },
-      {
-        label: '粘贴',
-        role: 'paste'
-      },
-      {
-        label: '最小化',
-        role: 'minimize'
+        label: '关于',
+        role: 'about'
       },
       {
         label: '帮助',
@@ -96,61 +67,4 @@ export const menuTemplate: MenuItemConstructorOptions[] = [
       }
     ]
   },
-  {
-    label: '类型',
-    submenu: [
-      {
-        label: '选项1',
-        type: 'checkbox',
-      },
-      {
-        label: '选项2',
-        type: 'checkbox',
-      },
-      {
-        label: '选项3',
-        type: 'checkbox',
-      },
-      { type: 'separator' },
-      {
-        label: 'item1',
-        type: 'radio',
-      },
-      {
-        label: 'item2',
-        type: 'radio',
-      },
-      {
-        label: 'item3',
-        type: 'radio',
-      },
-      { type: 'separator' },
-      {
-        label: 'windows',
-        type: 'submenu',
-        role: 'windowMenu'
-      }
-    ]
-  },
-  {
-    label: '其他',
-    submenu: [
-      {
-        label: '复制',
-        role: 'copy'
-      },
-      {
-        label: '剪切',
-        role: 'cut'
-      },
-      {
-        label: 'vite',
-        icon: path.join(__dirname, '../public/vite.png'),
-        accelerator: 'ctrl+o',
-        click() {
-          logger.info('vite')
-        }
-      }
-    ]
-  }
 ];
