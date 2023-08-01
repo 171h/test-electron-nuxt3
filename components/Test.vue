@@ -1,29 +1,29 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron'
-import { Logger } from '@171h/log';
+import { Logger } from '@171h/log'
 
-const logger = new Logger('Test.vue');
+const logger = new Logger('Test.vue')
 
 ipcRenderer.on('load', (event, arg) => {
-  console.log('load', arg)
-  logger.info('load', arg);
+  logger.info('load', arg)
+  logger.info('load', arg)
 })
 
-const send = () => {
+function send() {
   ipcRenderer.send('message', 'hello from renderer')
 }
 
-const openNewWindow = () => {
+function openNewWindow() {
   ipcRenderer.send('openNewWindow', 'hello from renderer')
 }
 
 const title = ref('new title')
-const setTitle = () => {
+function setTitle() {
   window.setTitle(title.value)
 }
 
 const filePath = ref('')
-const openFile = async () => {
+async function openFile() {
   filePath.value = await window.openFile()
 }
 
@@ -38,29 +38,37 @@ window.onUpdateCounter((event, value) => {
   <div>
     <div>
       <span>Node.js: </span>
-      <span id="node-version"></span>
+      <span id="node-version" />
     </div>
     <div>
       <span>Chromium: </span>
-      <span id="chrome-version"></span>
+      <span id="chrome-version" />
     </div>
     <div>
       <span>Electron:</span>
-      <span id="electron-version"></span>
+      <span id="electron-version" />
     </div>
-    <button @click="send">send</button>
-    <button @click="openNewWindow">点击打开新窗口</button>
-    <input />
-    
+    <button @click="send">
+      send
+    </button>
+    <button @click="openNewWindow">
+      点击打开新窗口
+    </button>
+    <input>
+
     <div>
       <h1>Renderer to main (one-way)</h1>
-      Title: <input type="text" v-model="title">
-      <button @click="setTitle">Set title</button>
+      Title: <input v-model="title" type="text">
+      <button @click="setTitle">
+        Set title
+      </button>
     </div>
 
     <div>
       <h1>Renderer to main (two-way)</h1>
-      <button @click="openFile">Open file</button>
+      <button @click="openFile">
+        Open file
+      </button>
       File Path:<strong>{{ filePath }}</strong>
     </div>
 

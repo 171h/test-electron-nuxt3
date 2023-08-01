@@ -7,10 +7,13 @@
   "main": "dist-electron/index.js",
   "scripts": {
     "dev": "nuxi dev",
-    "build": "nuxi build --prerender && electron-builder"
+    "build": "nuxi build --prerender && electron-builder",
+    "lint": "pnpm eslint .",
+    "lint:fix": "pnpm eslint . --fix"
   },
   "devDependencies": {
     "@171h/log": "^2.2.0",
+    "@antfu/eslint-config": "^0.40.0",
     "electron": "^25.3.2",
     "electron-builder": "^24.6.3",
     "nuxt": "^3.6.5",

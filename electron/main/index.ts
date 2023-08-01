@@ -1,5 +1,5 @@
-import { app, BrowserWindow, Menu } from 'electron'
-import path from 'path'
+import path from 'node:path'
+import { BrowserWindow, Menu, app } from 'electron'
 import { registerWinEvents } from './register-win-events'
 import { registerAppEvents } from './register-app-events'
 import { registerIpcMainEvents } from './register-ipcMain-events'
@@ -20,7 +20,7 @@ process.env.DIST = path.join(process.env.ROOT, 'dist-electron')
 process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
   ? path.join(process.env.ROOT, 'public')
   : path.join(process.env.ROOT, '.output/public')
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
 let win: BrowserWindow
 const preload = path.join(process.env.DIST, 'preload.js')
@@ -47,7 +47,8 @@ function bootstrap() {
   if (process.env.VITE_DEV_SERVER_URL) {
     win.loadURL(process.env.VITE_DEV_SERVER_URL)
     win.webContents.openDevTools()
-  } else {
+  }
+  else {
     win.loadFile(path.join(process.env.VITE_PUBLIC!, 'index.html'))
   }
 }
