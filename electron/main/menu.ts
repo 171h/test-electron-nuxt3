@@ -1,7 +1,48 @@
-import { MenuItemConstructorOptions } from "electron";
+import { App, MenuItemConstructorOptions } from "electron";
 import path from "path";
 
 const logger = console;
+
+const isMac = process.platform === 'darwin'
+
+const firstMenu: MenuItemConstructorOptions[] = !isMac ? [] : [{
+  label: 'app.name',
+  submenu: [
+    { role: 'about' },
+    { type: 'separator' },
+    { role: 'services' },
+    { type: 'separator' },
+    { role: 'hide' },
+    { role: 'hideOthers' },
+    { role: 'unhide' },
+    { type: 'separator' },
+    { role: 'quit' }
+  ]
+}]
+
+
+export const appMenuTemplate: MenuItemConstructorOptions[] = [
+  ...firstMenu,
+  {
+    label: "文件",
+    submenu: [
+      {
+        label: "打开文件",
+        click(menuItem, browserWindow, event) {
+          logger.info("open a file");
+        }
+      },
+      {
+        label: "新建文件",
+        click(menuItem, browserWindow, event) {
+          logger.info("create a file");
+        }
+      }
+    ]
+  }
+]
+
+
 export const menuTemplate: MenuItemConstructorOptions[] = [
   {
     label: "文件",
