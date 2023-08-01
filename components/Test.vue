@@ -22,6 +22,11 @@ const setTitle = () => {
   window.setTitle(title.value)
 }
 
+const filePath = ref('')
+const openFile = async () => {
+  filePath.value = await window.openFile()
+}
+
 </script>
 
 <template>
@@ -46,6 +51,12 @@ const setTitle = () => {
       <h1>Renderer to main (one-way)</h1>
       Title: <input type="text" v-model="title">
       <button @click="setTitle">Set title</button>
+    </div>
+
+    <div>
+      <h1>Renderer to main (two-way)</h1>
+      <button @click="openFile">Open file</button>
+      File Path:<strong>{{ filePath }}</strong>
     </div>
   </div>
 </template>

@@ -17,3 +17,4 @@ window.addEventListener("DOMContentLoaded", () => {
 // })
 
 window.setTitle = (title: string) => ipcRenderer.send("set-title", title);
+window.openFile = () => ipcRenderer.invoke("open-file")
