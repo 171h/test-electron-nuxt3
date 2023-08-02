@@ -1,9 +1,12 @@
 import path from 'node:path'
 import { BrowserWindow, Menu, app } from 'electron'
+import { Logger } from '@171h/log'
 import { registerWinEvents } from './register-win-events'
 import { registerAppEvents } from './register-app-events'
 import { registerIpcMainEvents } from './register-ipcMain-events'
 import { appMenuTemplate } from './menu'
+
+const logger = new Logger('electron:main:index.ts')
 
 // The built directory structure
 //
@@ -43,6 +46,8 @@ function bootstrap() {
   registerWinEvents(win)
   registerAppEvents(app, bootstrap)
   registerIpcMainEvents(win, app)
+
+  logger.info('temp dir', app.getPath('temp'))
 
   if (process.env.VITE_DEV_SERVER_URL) {
     win.loadURL(process.env.VITE_DEV_SERVER_URL)
