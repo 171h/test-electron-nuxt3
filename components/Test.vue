@@ -25,6 +25,8 @@ function setTitle() {
 const filePath = ref('')
 async function openFile() {
   filePath.value = await window.openFile()
+  const data = await window.readFile(filePath.value)
+  logger.info('data', data)
 }
 
 const counter = ref(0)

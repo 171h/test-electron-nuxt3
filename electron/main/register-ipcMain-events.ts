@@ -1,6 +1,7 @@
 import type { App } from 'electron'
 import { BrowserWindow, dialog, ipcMain } from 'electron'
 import { Logger } from '@171h/log'
+import { readAndUnzipFile } from './files'
 
 const logger = new Logger('register-ipcMain-events.ts')
 
@@ -21,6 +22,7 @@ export function registerIpcMainEvents(win: BrowserWindow, app: App) {
   })
   ipcMain.on('set-title', handleSetTitle)
   ipcMain.handle('open-file', openFile)
+  ipcMain.handle('read-file', readFile)
 }
 
 function handleSetTitle(event: Electron.IpcMainEvent, title: string) {
@@ -33,4 +35,8 @@ async function openFile() {
   const { canceled, filePaths, bookmarks } = await dialog.showOpenDialog({})
   if (!canceled)
     return filePaths[0]
+}
+
+async function readFile(event: Electron.IpcMainInvokeEvent, path: string) {
+  return await readAndUnzipFile(path)
 }

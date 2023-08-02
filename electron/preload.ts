@@ -17,4 +17,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
 window.setTitle = (title: string) => ipcRenderer.send('set-title', title)
 window.openFile = () => ipcRenderer.invoke('open-file')
+window.readFile = (path: string) => ipcRenderer.invoke('read-file', path)
 window.onUpdateCounter = (callback: (event: Electron.IpcRendererEvent, counter: number) => void) => ipcRenderer.on('update-counter', callback)
